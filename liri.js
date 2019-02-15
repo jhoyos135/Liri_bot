@@ -5,6 +5,7 @@ var Spotify = require('node-spotify-api');
 var fs = require('fs');
 var action = process.argv[2];
 var result = process.argv[3];
+let moment = require('moment');
 
 
 
@@ -51,7 +52,7 @@ function spotify(result){
 	});
 };
 
-//movie OMDB
+// movie OMDB
 function movie(result) {
     if (!result){
         result = 'Mr Nobody';
@@ -76,21 +77,26 @@ function movie(result) {
 
 // concert
 function concert(result) {
+    if (!result){
+        result = 'Tiesto';
+    }
     let concert_url = `https://rest.bandsintown.com/artists/${result}/events?app_id=codingbootcamp`
     
     axios.get(concert_url).then((res) => {
         
-        let data = res.data
+        let data = res.data;
         for(let i in data) {
+
             let date = data[i].datetime;
+            let new_date = moment(date).format("MM/DD/YYYY");
             let venue_name = data[i].venue.name;
             let venue_city = data[i].venue.city;
             let venue_country = data[i].venue.country;
 
             console.log(`Venue: ${venue_name}`);
             console.log(`Location: ${venue_country}, ${venue_city}`);
-            console.log(`Date: ${date}`)
-            console.log(`------------------------`)
+            console.log(`Date: ${new_date}`);
+            console.log(`------------------------`);
             
         };
 
