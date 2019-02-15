@@ -49,10 +49,9 @@ function spotify(result){
 	        console.log(`Preview Link: ${songInfo[0].preview_url}`);
 	        console.log(`Album: ${songInfo[0].album.name}`);
 	});
-}
+};
 
 //movie OMDB
-
 function movie(result) {
     if (!result){
         result = 'Mr Nobody';
@@ -72,5 +71,29 @@ function movie(result) {
 		    console.log("Plot: " + data.Plot);
 		    console.log("Actors: " + data.Actors);
 		
-    })
+    });
+};
+
+// concert
+function concert(result) {
+    let concert_url = `https://rest.bandsintown.com/artists/${result}/events?app_id=codingbootcamp`
+    
+    axios.get(concert_url).then((res) => {
+        
+        let data = res.data
+        for(let i in data) {
+            let date = data[i].datetime;
+            let venue_name = data[i].venue.name;
+            let venue_city = data[i].venue.city;
+            let venue_country = data[i].venue.country;
+
+            console.log(`Venue: ${venue_name}`);
+            console.log(`Location: ${venue_country}, ${venue_city}`);
+            console.log(`Date: ${date}`)
+            console.log(`------------------------`)
+            
+        };
+
+    });
+
 };
