@@ -1,3 +1,4 @@
+
 let dotenv = require("dotenv").config();
 var keys = require("./keys.js");
 var axios = require('axios');
@@ -6,8 +7,6 @@ var fs = require('fs');
 var action = process.argv[2];
 var result = process.argv[3];
 let moment = require('moment');
-
-
 
 switch (action) {
 
@@ -58,8 +57,8 @@ function movie(result) {
         result = 'Mr Nobody';
     }
 
-    let movie_url = `http://www.omdbapi.com/?t=${result}&y=&plot=short&apikey=40e9cece`;
-    
+    let movie_url = `http://www.omdbapi.com/?t=${result}&y=&plot=short&apikey=trilogy`;
+
     axios.get(movie_url).then((res) => {
         let data = res.data;
 
@@ -80,10 +79,11 @@ function concert(result) {
     if (!result){
         result = 'Tiesto';
     }
-    let concert_url = `https://rest.bandsintown.com/artists/${result}/events?app_id=codingbootcamp`
-    
+
+    let concert_url = `https://rest.bandsintown.com/artists/${result}/events?app_id=codingbootcamp`;
+
     axios.get(concert_url).then((res) => {
-        
+
         let data = res.data;
         for(let i in data) {
 
@@ -96,10 +96,33 @@ function concert(result) {
             console.log(`Venue: ${venue_name}`);
             console.log(`Location: ${venue_country}, ${venue_city}`);
             console.log(`Date: ${new_date}`);
-            console.log(`------------------------`);
-            
-        };
+            console.log(`<-------------------------------->`);
 
+        };
     });
+};
+
+// do what it says
+function doit() {
+	fs.readFile('random.txt', "utf8", (error, data) => {
+
+		if (error) {
+    		return console.log(error);
+  		}
+
+		let dataArr = data.split(",");
+
+		if (dataArr[0] === "spotify-this-song") {
+			let spotify_this = dataArr[1].slice(1, -1);
+			spotify(spotify_this);
+		} else if (dataArr[0] === "concert-this") {
+			let concert_this = dataArr[1].slice(1, -1);
+			concert(concert_this);
+		} else if(dataArr[0] === "movie-this") {
+			let movie_this = dataArr[1].slice(1, -1);
+			movie(movie_this);
+		} 
+		
+  	});
 
 };
