@@ -1,11 +1,11 @@
 
-let dotenv = require("dotenv").config();
-var keys = require("./keys.js");
-var axios = require('axios');
-var Spotify = require('node-spotify-api');
-var fs = require('fs');
-var action = process.argv[2];
-var result = process.argv[3];
+require("dotenv").config();
+let keys = require("./keys.js");
+let axios = require('axios');
+let Spotify = require('node-spotify-api');
+let fs = require('fs');
+let action = process.argv[2];
+let result = process.argv[3];
 let moment = require('moment');
  
 
