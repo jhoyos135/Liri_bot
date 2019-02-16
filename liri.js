@@ -5,10 +5,10 @@ let axios = require('axios');
 let Spotify = require('node-spotify-api');
 let fs = require('fs');
 let action = process.argv[2];
-let result = process.argv[3];
+let input = process.argv;
+let result = '';
 let moment = require('moment');
- 
-
+  
 switch (action) {
 
 	case "spotify-this-song":
@@ -30,6 +30,17 @@ switch (action) {
 
 // spotify 
 function spotify(result){
+
+    // removes the need of quotes in the result arguments
+    for(var i = 3; i < input.length; i++) {
+
+        if (i > 2 && i < input.length) {
+            result = result + " " + input[i];
+        }
+        else {
+            result += input[i];
+        }
+      }
 
 	let spotify = new Spotify(keys.spotify_keys);
 		if (!result){
@@ -62,12 +73,25 @@ function spotify(result){
 
 // movie OMDB
 function movie(result) {
+
+    // removes the need of quotes in the result arguments
+    for(var i = 3; i < input.length; i++) {
+
+        if (i > 2 && i < input.length) {
+            result = result + "-" + input[i];
+        }
+        else {
+            result += input[i];
+        }
+      }
+      
+
     if (!result){
         result = 'Mr Nobody';
     }
 
     let movie_url = `http://www.omdbapi.com/?t=${result}&y=&plot=short&apikey=trilogy`;
-
+    console.log(result)
     axios.get(movie_url).then((res) => {
         let data = res.data;
 
@@ -89,9 +113,22 @@ function movie(result) {
 
 // concert
 function concert(result) {
+
+    // removes the need of quotes in the result arguments
+    for(var i = 3; i < input.length; i++) {
+
+        if (i > 2 && i < input.length) {
+            result = result + "" + input[i];
+        }
+        else {
+            result += input[i];
+        }
+      }
+
     if (!result){
         result = 'Tiesto';
     }
+    console.log(result)
 
     let concert_url = `https://rest.bandsintown.com/artists/${result}/events?app_id=codingbootcamp`;
 
@@ -145,7 +182,7 @@ function logger(args) {
     fs.appendFileSync('log.txt', `
     ${moment(new Date()).format('MMM Do YY')}
     -- ${args}
-`, function(err) {
+`, (err) => {
         if(err) throw err;
     });
 };
