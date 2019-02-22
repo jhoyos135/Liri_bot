@@ -1,13 +1,13 @@
 
 require("dotenv").config();
-let keys = require("./keys.js");
-let axios = require('axios');
-let Spotify = require('node-spotify-api');
-let fs = require('fs');
-let action = process.argv[2];
-let input = process.argv;
-let result = '';
-let moment = require('moment');
+const keys = require("./keys.js");
+const axios = require('axios');
+const Spotify = require('node-spotify-api');
+const fs = require('fs');
+const action = process.argv[2];
+const input = process.argv;
+const result = '';
+const moment = require('moment');
   
 switch (action) {
 
@@ -36,11 +36,10 @@ function spotify(result){
 
         if (i > 2 && i < input.length) {
             result = result + " " + input[i];
-        }
-        else {
+        } else {
             result += input[i];
         }
-      }
+      };
 
 	let spotify = new Spotify(keys.spotify_keys);
 		if (!result){
@@ -52,7 +51,7 @@ function spotify(result){
 			if (err){
 	            console.log('Error occurred: ' + err);
 	            return;
-            }
+            };
             // console.log(data.tracks.items);
             
             let songInfo = data.tracks.items;
@@ -66,7 +65,7 @@ function spotify(result){
             console.log(`Album: ${album}`);
             
             //logs
-            logger(artist + ' ' + song + ' ' + album)
+            logger(artist + ' | ' + song + ' | ' + album);
             
 	});
 };
@@ -79,19 +78,17 @@ function movie(result) {
 
         if (i > 2 && i < input.length) {
             result = result + "-" + input[i];
-        }
-        else {
+        } else {
             result += input[i];
         }
-      }
+      };
       
-
     if (!result){
         result = 'Mr Nobody';
-    }
+    };
 
     let movie_url = `http://www.omdbapi.com/?t=${result}&y=&plot=short&apikey=trilogy`;
-    console.log(result)
+
     axios.get(movie_url).then((res) => {
         let data = res.data;
 
@@ -105,7 +102,7 @@ function movie(result) {
             console.log("Actors: " + data.Actors);
             
             //logs
-            logger(data.Title + ' ' + data.Year + ' ' + data.Actors+ ' ' + data.Plot);
+            logger(data.Title + ' | ' + data.Year + ' | ' + data.Actors+ ' | ' + data.Plot);
 
 		
     });
@@ -119,16 +116,14 @@ function concert(result) {
 
         if (i > 2 && i < input.length) {
             result = result + "" + input[i];
-        }
-        else {
+        } else {
             result += input[i];
         }
-      }
+      };
 
     if (!result){
         result = 'Tiesto';
-    }
-    console.log(result)
+    };
 
     let concert_url = `https://rest.bandsintown.com/artists/${result}/events?app_id=codingbootcamp`;
 
@@ -142,13 +137,14 @@ function concert(result) {
             let venue_name = data[i].venue.name;
             let venue_city = data[i].venue.city;
             let venue_country = data[i].venue.country;
-
+            
+            console.log(`Artist/Band: ${result}`)
             console.log(`Venue: ${venue_name}`);
             console.log(`Location: ${venue_country}, ${venue_city}`);
             console.log(`Date: ${new_date}`);
             console.log(`<-------------------------------->`);
 
-            logger(new_date + ' ' + venue_name + ' ' + venue_country + ' ' + venue_city);
+            logger(new_date + ' | ' + venue_name + ' | ' + venue_country + ' | ' + venue_city + ' | ' + result);
      
         };
     });
