@@ -11,7 +11,7 @@ Bandsintown
 Node.js
 Axios
 Moment
-fs for loggin all your results
+Bunyan for loggin all your results
 
 # Instruction
 

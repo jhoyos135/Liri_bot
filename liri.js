@@ -2,6 +2,7 @@
 require("dotenv").config();
 const keys = require("./keys.js");
 const axios = require('axios');
+var bunyan = require('bunyan');
 const Spotify = require('node-spotify-api');
 const fs = require('fs');
 const action = process.argv[2];
@@ -65,8 +66,9 @@ function spotify(result){
             console.log(`Album: ${album}`);
             
             //logs
+           
             logger(artist + ' | ' + song + ' | ' + album);
-            
+
 	});
 };
 
@@ -175,10 +177,15 @@ function doIt() {
 
 //logger  
 function logger(args) {
-    fs.appendFileSync('log.txt', `
-    ${moment(new Date()).format('MMM Do YY')}
-    -- ${args}
-`, (err) => {
-        if(err) throw err;
+
+    var log = bunyan.createLogger({
+        name: 'myapp',
+        streams: [{
+            type: 'rotating-file',
+            path: 'log.txt'
+            
+        }]
     });
+
+    log.info(`${args}`);
 };
