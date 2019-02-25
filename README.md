@@ -15,8 +15,8 @@ Bunyan for loggin all your results
 
 # Instruction
 
-Clone repo
-Run npm install
+Clone repo\
+Run npm install\
 At command prompt run node liri.js <pass in an instruction from bellow>
 
 To make it run all you have to do is:\
