@@ -50,7 +50,7 @@ function spotify(result){
 		spotify.search({ type: 'track', query: result }, (err, data) => {
 
 			if (err){
-	            console.log('Error occurred: ' + err);
+	            console.log(err);
 	            return;
             };
             // console.log(data.tracks.items);
@@ -92,8 +92,11 @@ function movie(result) {
     let movie_url = `http://www.omdbapi.com/?t=${result}&y=&plot=short&apikey=trilogy`;
 
     axios.get(movie_url).then((res) => {
+        
         let data = res.data;
-
+        if(data.Response =='False') {
+            console.log('movie not found')
+        } else {
             console.log("Title: " + data.Title);
 		    console.log("Release Year: " + data.Year);
 		    console.log("IMDB Rating: " + data.imdbRating);
@@ -105,8 +108,11 @@ function movie(result) {
             
             //logs
             logger(data.Title + ' | ' + data.Year + ' | ' + data.Actors+ ' | ' + data.Plot);
+        }
 
-		
+    }).catch(err => {
+        console.log(err);
+        return;
     });
 };
 
@@ -149,15 +155,18 @@ function concert(result) {
             logger(new_date + ' | ' + venue_name + ' | ' + venue_country + ' | ' + venue_city + ' | ' + result);
      
         };
+    }).catch(err => {
+        console.log(err);
+        return;
     });
 };
 
 // do what it says
 function doIt() {
-	fs.readFile('random.txt', "utf8", (error, data) => {
+	fs.readFile('random.txt', "utf8", (err, data) => {
 
-		if (error) {
-    		return console.log(error);
+		if (err) {
+    		return console.log(err);
   		};
 
 		let dataArr = data.split(",");
@@ -175,7 +184,7 @@ function doIt() {
   	});
 };  
 
-//logger  
+// logger  
 function logger(args) {
 
     var log = bunyan.createLogger({
