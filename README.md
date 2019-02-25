@@ -30,3 +30,7 @@ go to any terminal and run this commands:
 # Note
 
 You don't have to put "quotes" around the arguments to make it run
+
+# link
+
+https://drive.google.com/file/d/1ZhoO8q42bjiuhAkS8oKj8dQWQWeaynEd/view?usp=sharing
